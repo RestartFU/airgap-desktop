@@ -6,27 +6,24 @@ function createWindow() {
   win = new BrowserWindow({
     width: 1200,
     height: 800,
-    show: false,
     title: "AirGap Wallet",
-    backgroundColor: "#201c1c",
+    backgroundColor: "#00000000",
     titleBarStyle: 'hidden',
     titleBarOverlay: {
-      color: "#201c1c",
-      symbolColor: "#ffffff",
-      height: 30
+      color: '#00000000',
+      symbolColor: '#333333',
+      height: 24
     },
     webPreferences: {
-      contextIsolation: true,
+      contextIsolation: false,
+      nodeIntegration: false,
     }
   });
 
-  // Remove default menu
-  win.setMenu(null);
-
-  // Load AirGap wallet website
   win.loadURL('https://wallet.airgap.it');
 
-  // Inject CSS to create a draggable area at top
+  win.setMenu(null);
+
   win.webContents.on('did-finish-load', () => {
     win!.webContents.insertCSS(`
       body::before {
@@ -35,14 +32,17 @@ function createWindow() {
         top: 0;
         left: 0;
         width: 100%;
-        height: 30px;
+        height: 24px;
+        background: transparent;
         -webkit-app-region: drag;
-        z-index: 9999999;
-        pointer-events: auto;
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      body {
+        margin-top: 0px !important;
       }
     `);
-
-    win!.show();
   });
 }
 

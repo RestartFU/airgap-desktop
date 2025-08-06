@@ -1,0 +1,43 @@
+{
+  "name": "airgap-desktop",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for AirGap wallet",
+  "author": "Danick Lachapelle",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^30.0.1",
+    "typescript": "^5.4.5",
+    "@types/node": "^20.10.5",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    
+    "appId": "com.yourcompany.airgapdesktop",
+    "productName": "AirGap Desktop",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
